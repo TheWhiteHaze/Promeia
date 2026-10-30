@@ -1,4 +1,5 @@
 # 扫描文件 - 分类 - 移动
+import argparse
 import os
 from pathlib import Path
 
@@ -35,8 +36,10 @@ def move(cat, file_name, src_dir):
 
 
 def main():
-    src_dir = input("请输入目录=")
-    scan_file(src_dir)
+    parser = argparse.ArgumentParser(description="文件整理器")
+    parser.add_argument("src_dir", type=str, help="file`s source directory")
+    args = parser.parse_args()
+    scan_file(args.src_dir)
 
 
 if __name__ == "__main__":
