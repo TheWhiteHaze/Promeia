@@ -27,7 +27,9 @@ def build_parser():
 def scan(src: Path, out: Path):
     paths = src.iterdir()
     for path in paths:
-        if out in path.parents:
+        if not path.is_file():
+            continue
+        if path == out or out in path.parents:
             continue
         yield path
 
@@ -45,7 +47,7 @@ def unique_dst(dst: Path) -> Path:
         return dst
     i = 1
     while True:
-        cand = dst.with_name(f"{dst.stem}_{i}.{dst.suffix}")
+        cand = dst.with_name(f"{dst.stem}_{i}{dst.suffix}")
         if not cand.exists():
             return cand
         i += 1
